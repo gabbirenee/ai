@@ -1,3 +1,7 @@
+# Gabbi Forsythe
+# 2/10/2020
+# # Project #1: Question #3
+
 # shopSmart.py
 # ------------
 # Licensing Information:  You are free to use or extend these projects for
@@ -30,7 +34,15 @@ def shopSmart(orderList, fruitShops):
         fruitShops: List of FruitShops
     """
     "*** YOUR CODE HERE ***"
-    return None
+    bestShop = None
+    bestPrice = 1000000.0
+    for fruitShop in fruitShops:
+        price = fruitShop.getPriceOfOrder(orderList)
+        if price < bestPrice:
+            bestShop = fruitShop
+            bestPrice = price
+        
+    return bestShop
 
 
 if __name__ == '__main__':
@@ -44,3 +56,40 @@ if __name__ == '__main__':
     print("For orders ", orders, ", the best shop is", shopSmart(orders, shops).getName())
     orders = [('apples', 3.0)]
     print("For orders: ", orders, ", the best shop is", shopSmart(orders, shops).getName())
+
+# AUTOGRADING
+# thomas% python3 autograder.py -q q3
+# Starting on 2-5 at 15:08:06
+
+# Question q3
+# ===========
+
+# Welcome to shop1 fruit shop
+# Welcome to shop2 fruit shop
+# *** PASS: test_cases/q3/select_shop1.test
+# *** 	shopSmart(order, shops) selects the cheapest shop
+# Welcome to shop1 fruit shop
+# Welcome to shop2 fruit shop
+# *** PASS: test_cases/q3/select_shop2.test
+# *** 	shopSmart(order, shops) selects the cheapest shop
+# Welcome to shop1 fruit shop
+# Welcome to shop2 fruit shop
+# Welcome to shop3 fruit shop
+# *** PASS: test_cases/q3/select_shop3.test
+# *** 	shopSmart(order, shops) selects the cheapest shop
+
+# ### Question q3: 1/1 ###
+
+
+# Finished at 15:08:06
+
+# Provisional grades
+# ==================
+# Question q3: 1/1
+# ------------------
+# Total: 1/1
+
+# Your grades are NOT yet registered.  To register your grades, make sure
+# to follow your instructor's guidelines to receive credit on your project.
+
+# thomas% 

@@ -1,3 +1,7 @@
+# Gabbi Forsythe
+# 2/10/2020
+# Project #1: Question #2
+
 # buyLotsOfFruit.py
 # -----------------
 # Licensing Information:  You are free to use or extend these projects for
@@ -49,3 +53,33 @@ if __name__ == '__main__':
     "This code runs when you invoke the script from the command line"
     orderList = [('apples', 2.0), ('pears', 3.0), ('limes', 4.0)]
     print('Cost of', orderList, 'is', buyLotsOfFruit(orderList))
+
+# AUTOGRADING
+# thomas% python3 autograder.py -q q2
+# Starting on 2-5 at 15:06:20
+
+# Question q2
+# ===========
+
+# *** PASS: test_cases/q2/food_price1.test
+# *** 	buyLotsOfFruit correctly computes the cost of the order
+# *** PASS: test_cases/q2/food_price2.test
+# *** 	buyLotsOfFruit correctly computes the cost of the order
+# *** PASS: test_cases/q2/food_price3.test
+# *** 	buyLotsOfFruit correctly computes the cost of the order
+
+# ### Question q2: 1/1 ###
+
+
+# Finished at 15:06:20
+
+# Provisional grades
+# ==================
+# Question q2: 1/1
+# ------------------
+# Total: 1/1
+
+# Your grades are NOT yet registered.  To register your grades, make sure
+# to follow your instructor's guidelines to receive credit on your project.
+
+# thomas% 
