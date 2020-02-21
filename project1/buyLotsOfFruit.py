@@ -38,6 +38,7 @@ def buyLotsOfFruit(orderList):
 
     Returns cost of order
     """
+    # My code Below
     totalCost = 0.0
     for fruit, numPounds in orderList:
         if fruit not in fruitPrices:

@@ -1,6 +1,6 @@
 # Gabbi Forsythe
 # 2/10/2020
-# # Project #1: Question #3
+# Project #1: Question #3
 
 # shopSmart.py
 # ------------
@@ -33,7 +33,7 @@ def shopSmart(orderList, fruitShops):
         orderList: List of (fruit, numPound) tuples
         fruitShops: List of FruitShops
     """
-    "*** YOUR CODE HERE ***"
+    # my code below
     bestShop = None
     bestPrice = 1000000.0
     for fruitShop in fruitShops:
