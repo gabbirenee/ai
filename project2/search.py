@@ -121,6 +121,7 @@ def breadthFirstSearch(problem):
     queue = Queue() # the frontier aka the oregon trail
     visited = []    # will hold the list of nodes we have been to
     queue.push((problem.getStartState(), []))
+    visited.append(problem.getStartState())
     
     while not(queue.isEmpty()):
         temp = queue.pop()
@@ -131,13 +132,14 @@ def breadthFirstSearch(problem):
             # print(actions)
             return actions
         else:
-            visited.append(current)    # add the node to the list of visited nodes
+            # visited.append(current)    # add the node to the list of visited nodes
             for child in problem.getSuccessors(current):
                 # print(child)
                 childState = child[0]   # coordinates/state of the child node
                 childDirect = child[1]  # directions of the child node from the current node (NSEW)
                 if childState not in visited:
                     queue.push((childState, actions + [childDirect])) # add the node to the frontier if it is not the goal state
+                    visited.append(childState)
     return []
 
 def uniformCostSearch(problem):
