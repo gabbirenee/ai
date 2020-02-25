@@ -126,7 +126,6 @@ def breadthFirstSearch(problem):
         temp = queue.pop()
         current = temp[0]   # current state of the node
         actions = temp[1]   # actions to get to current node
-        # print(problem.getSuccessors(current))
         if problem.isGoalState(current):
             print("Goal Found at ", current)
             # print(actions)
@@ -156,7 +155,29 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    from util import PriorityQueue
+    pq = PriorityQueue() 
+    visited = []
+    pq.push( (problem.getStartState(), []), heuristic(problem.getStartState(), problem) )
+    visited.append(problem.getStartState())
+
+    while not (pq.isEmpty()):
+        temp = pq.pop()
+        current = temp[0]   # current state of the node
+        actions = temp[1]   # actions to get to current node
+        if problem.isGoalState(current):
+            print("Goal Found at ", current)
+            # print(actions)
+            return actions
+        if current not in visited:
+            visited.append(current)
+        for child in problem.getSuccessors(current):
+            childState = child[0]   # coordinates/state of the child node
+            childDirect = child[1]  # directions of the child node from the current node (NSEW)
+            if childState not in visited:
+                pq.update((childState, actions + [childDirect]), problem.getCostOfActions(actions + [childDirect])+ heuristic(childState, problem)) # add the node to the frontier if it is not the goal state 
+    return []
+    # util.raiseNotDefined()
 
 
 # Abbreviations
