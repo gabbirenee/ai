@@ -87,7 +87,43 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    # print("Start:", problem.getStartState())
+    # print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
+    # print("Start's successors:", problem.getSuccessors(problem.getStartState()))
+    from util import Stack
+    stack = Stack() # the frontier aka the oregon trail
+    visited = []    # will hold the list of nodes we have been to
+    stack.push((problem.getStartState(), []))
+    visited.append(problem.getStartState())
+    
+    while not(stack.isEmpty()):
+        temp = stack.pop()
+        current = temp[0]   # current state of the node
+        actions = temp[1]   # actions to get to current node
+        # print(problem.getSuccessors(current))
+        for child in problem.getSuccessors(current):
+            # print(child)
+            childState = child[0]   # coordinates/state of the child node
+            childDirect = child[1]  # directions of the child node from the current node (NSEW)
+            if childState not in visited:
+                if problem.isGoalState(childState):
+                    print("Goal Found at ", childState)
+                    # print(actions)
+                    return actions + [childDirect]
+                else:
+                    stack.push((childState, actions + [childDirect])) # add the node to the frontier if it is not the goal state
+                    visited.append(childState)    # add the node to the list of visited nodes
+        # current, actions = stack.pop()
+        # if current not in visited:
+        #     visited.append(current)
+        #     if problem.isGoalState(current):
+        #         return actions
+        #     successors = list(problem.getSuccessors(current))
+        #     for child in successors: 
+        #         childState, childDirect = child
+        #         if childState not in visited:
+        #             stack.push((childState, actions + [childDirect]))
+    return []
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
