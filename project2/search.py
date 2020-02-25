@@ -143,7 +143,8 @@ def breadthFirstSearch(problem):
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    return aStarSearch(problem, nullHeuristic)  # ucs is just astar with a 0 heuristic -- work smarter not harder
+    # util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):
     """
