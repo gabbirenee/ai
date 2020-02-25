@@ -94,41 +94,52 @@ def depthFirstSearch(problem):
     stack = Stack() # the frontier aka the oregon trail
     visited = []    # will hold the list of nodes we have been to
     stack.push((problem.getStartState(), []))
-    visited.append(problem.getStartState())
     
     while not(stack.isEmpty()):
         temp = stack.pop()
         current = temp[0]   # current state of the node
         actions = temp[1]   # actions to get to current node
         # print(problem.getSuccessors(current))
-        for child in problem.getSuccessors(current):
-            # print(child)
-            childState = child[0]   # coordinates/state of the child node
-            childDirect = child[1]  # directions of the child node from the current node (NSEW)
-            if childState not in visited:
-                if problem.isGoalState(childState):
-                    print("Goal Found at ", childState)
-                    # print(actions)
-                    return actions + [childDirect]
-                else:
+        if problem.isGoalState(current):
+            print("Goal Found at ", current)
+            # print(actions)
+            return actions
+        else:
+            visited.append(current)    # add the node to the list of visited nodes
+            for child in problem.getSuccessors(current):
+                # print(child)
+                childState = child[0]   # coordinates/state of the child node
+                childDirect = child[1]  # directions of the child node from the current node (NSEW)
+                if childState not in visited:
                     stack.push((childState, actions + [childDirect])) # add the node to the frontier if it is not the goal state
-                    visited.append(childState)    # add the node to the list of visited nodes
-        # current, actions = stack.pop()
-        # if current not in visited:
-        #     visited.append(current)
-        #     if problem.isGoalState(current):
-        #         return actions
-        #     successors = list(problem.getSuccessors(current))
-        #     for child in successors: 
-        #         childState, childDirect = child
-        #         if childState not in visited:
-        #             stack.push((childState, actions + [childDirect]))
     return []
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    from util import Queue
+    queue = Queue() # the frontier aka the oregon trail
+    visited = []    # will hold the list of nodes we have been to
+    queue.push((problem.getStartState(), []))
+    
+    while not(queue.isEmpty()):
+        temp = queue.pop()
+        current = temp[0]   # current state of the node
+        actions = temp[1]   # actions to get to current node
+        # print(problem.getSuccessors(current))
+        if problem.isGoalState(current):
+            print("Goal Found at ", current)
+            # print(actions)
+            return actions
+        else:
+            visited.append(current)    # add the node to the list of visited nodes
+            for child in problem.getSuccessors(current):
+                # print(child)
+                childState = child[0]   # coordinates/state of the child node
+                childDirect = child[1]  # directions of the child node from the current node (NSEW)
+                if childState not in visited:
+                    queue.push((childState, actions + [childDirect])) # add the node to the frontier if it is not the goal state
+    return []
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
