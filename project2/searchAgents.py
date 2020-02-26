@@ -387,7 +387,7 @@ def cornersHeuristic(state, problem):
     toVisit = state[1]
     sum = 0
     toVisitCopy = toVisit
-    print("toVisitCopy: ", toVisitCopy)
+    # print("toVisitCopy: ", toVisitCopy)
 
     distances = [0]
     for corner in toVisit:
@@ -487,7 +487,15 @@ def foodHeuristic(state, problem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
-    return 0
+    foodList = foodGrid.asList()
+    foodCount = len(foodList)
+    # print(foodCount)
+    distances = [0]
+    for food in foodList:
+        # print(food, position)
+        distances.append(util.manhattanDistance(food, position))
+    sum = max(distances)
+    return sum
 
 class ClosestDotSearchAgent(SearchAgent):
     "Search for all food using a sequence of searches"
