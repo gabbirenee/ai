@@ -389,24 +389,6 @@ def cornersHeuristic(state, problem):
     toVisitCopy = toVisit
     print("toVisitCopy: ", toVisitCopy)
 
-    # return sum
-    # Find closest corner (via manhattan distance)
-    # xy1 = currentPos
-    # while len(toVisitCopy) > 0:
-    #     lowest = 99999
-    #     for corner in toVisitCopy:
-    #         xy2 = corner
-    #         print(xy1, " ", xy2)
-    #         dist = mazeDistance(xy1, xy2, problem.startingGameState)
-    #         if dist < lowest:
-    #             closestCorner = corner
-    #             lowest = dist
-    #         # print("distance from", xy1, " to ", xy2, " is ", dist)
-    #     sum += lowest    # add the distance to the corner to the total sum
-    #     print("sum: ", sum)
-    #     xy1 = closestCorner
-    #     toVisitCopy.remove(closestCorner)
-    #     print("toVisitCopy2: ", toVisitCopy)
     distances = [0]
     for corner in toVisit:
         distances.append(util.manhattanDistance(currentPos, corner))
