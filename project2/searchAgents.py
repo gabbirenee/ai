@@ -287,7 +287,6 @@ class CornersProblem(search.SearchProblem):
         self._expanded = 0 # DO NOT CHANGE; Number of search nodes expanded
         # Please add any code here which you would like to use
         # in initializing the problem
-        "*** YOUR CODE HERE ***"
 
     def getStartState(self):
         """
@@ -295,14 +294,29 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        start = self.startingPosition
+        toVisit = list(self.corners)
+
+        if start in toVisit: 
+            toVisit.remove(start)
+
+        startState = (start, toVisit)
+        return startState
+        # util.raiseNotDefined()
 
     def isGoalState(self, state):
         """
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        position, toVisit = state
+        if position in toVisit:
+            toVisit.remove(position)
+        if len(toVisit) == 0:
+            return True
+        else:
+            return False
+        # util.raiseNotDefined()
 
     def getSuccessors(self, state):
         """
@@ -314,17 +328,24 @@ class CornersProblem(search.SearchProblem):
             state, 'action' is the action required to get there, and 'stepCost'
             is the incremental cost of expanding to that successor
         """
-
+        currentPosition, toVisit = state
+        x,y = currentPosition
         successors = []
         for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
             # Add a successor state to the successor list if the action is legal
             # Here's a code snippet for figuring out whether a new position hits a wall:
-            #   x,y = currentPosition
-            #   dx, dy = Actions.directionToVector(action)
-            #   nextx, nexty = int(x + dx), int(y + dy)
-            #   hitsWall = self.walls[nextx][nexty]
-
-            "*** YOUR CODE HERE ***"
+            x,y = currentPosition
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x + dx), int(y + dy)
+            hitsWall = self.walls[nextx][nexty]
+            if not(hitsWall):
+                childPosition = (nextx, nexty)
+                childCorners = list(toVisit)
+                if childPosition in childCorners:
+                    childCorners.remove(childPosition)
+                # successors.append(((childPosition, childVCorners, childNonCorners), action, 1))
+                child = ((childPosition, childCorners), action, 1)
+                successors.append(child) 
 
         self._expanded += 1 # DO NOT CHANGE
         return successors
