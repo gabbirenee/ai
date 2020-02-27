@@ -493,9 +493,11 @@ def foodHeuristic(state, problem):
     distances = [0]
     for food in foodList:
         # print(food, position)
-        distances.append(util.manhattanDistance(food, position))
-    sum = max(distances)
-    return sum
+        # dist = util.manhattanDistance(food, position)
+        # distances.append(dist)
+        dist = mazeDistance(position, food, problem.startingGameState)
+        distances.append(dist)
+    return max(distances)
 
 class ClosestDotSearchAgent(SearchAgent):
     "Search for all food using a sequence of searches"

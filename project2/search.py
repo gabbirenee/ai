@@ -101,7 +101,7 @@ def depthFirstSearch(problem):
         actions = temp[1]   # actions to get to current node
         # print(problem.getSuccessors(current))
         if problem.isGoalState(current):
-            print("Goal Found at ", current)
+            # print("Goal Found at ", current)
             # print(actions)
             return actions
         else:
@@ -128,7 +128,7 @@ def breadthFirstSearch(problem):
         current = temp[0]   # current state of the node
         actions = temp[1]   # actions to get to current node
         if problem.isGoalState(current):
-            print("Goal Found at ", current)
+            # print("Goal Found at ", current)
             # print(actions)
             return actions
         else:
@@ -169,7 +169,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
         current = temp[0]   # current state of the node
         actions = temp[1]   # actions to get to current node
         if problem.isGoalState(current):
-            print("Goal Found at ", current)
+            # print("Goal Found at ", current)
             # print(actions)
             return actions
         if current not in visited:
