@@ -1,3 +1,7 @@
+# Gabbi Forsythe
+# AI Project 3
+# 4/20/2020
+
 # multiAgents.py
 # --------------
 # Licensing Information:  You are free to use or extend these projects for
@@ -74,7 +78,23 @@ class ReflexAgent(Agent):
         newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
 
         "*** YOUR CODE HERE ***"
-        return successorGameState.getScore()
+        # negative value because the game ends (no living cost)
+        if action == "Stop":
+            return -100
+
+        # negative value because you die
+        for ghostState in newGhostStates:
+            if newPos == ghostState.getPosition() and ghostState.scaredTimer == 0:
+                return -100
+
+        maxScore = -1000000
+        # get the shortest manhattan distance
+        for food in currentGameState.getFood().asList():
+            score = -1*manhattanDistance(food, newPos)
+            if score > maxScore:
+                maxScore = score
+
+        return maxScore
 
 def scoreEvaluationFunction(currentGameState):
     """
