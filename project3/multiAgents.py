@@ -153,9 +153,66 @@ class MinimaxAgent(MultiAgentSearchAgent):
 
         gameState.isLose():
         Returns whether or not the game state is a losing state
+
+        self.evaluationFunction(currentGameState )
+
+        self.depth
+
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+
+        score, action = self.pacmanActions(gameState, self.depth)
+        return action
+
+
+    # this function chooses pacmans actions
+    # Return: (score, action)
+    def pacmanActions(self, gameState, curDepth):
+        # check if the game state is a terminal state, or if the minimax tree has been reached the limit
+        if gameState.isWin() or gameState.isLose() or curDepth == 0:
+            return (self.evaluationFunction(gameState), "Stop")
+        
+        numGhosts = gameState.getNumAgents() - 1
+        bestScore = -100000000
+        bestAction = ""
+
+        # go through all the options that pacman has
+        for action in gameState.getLegalActions(0):
+            # get the successor state of the action
+            successorState= gameState.generateSuccessor(0, action)
+            # get the values of the ghostActions 
+            successorScore = self.ghostActions(successorState, curDepth, 1)
+            if bestScore < successorScore:  # take the max score
+                bestScore = successorScore
+                bestAction = action
+            
+        return (bestScore, bestAction)  # return score for use in the ghost function, action for use in the getAction function 
+
+    # this functions determines the ghost(s) actions
+    # Returns: score
+    def ghostActions(self, gameState, curDepth, ghost):
+        # check if the game state is a terminal state, or if the minimax tree has been reached the limit
+        if gameState.isWin() or gameState.isLose() or curDepth == 0: 
+            return self.evaluationFunction(gameState)
+
+        minScore = 100000000
+
+        for action in gameState.getLegalActions(ghost):
+            successorState = gameState.generateSuccessor(ghost, action)
+
+            # the last ghost action should trigger the pacman action in the tree
+            if ghost == gameState.getNumAgents() - 1:
+                successorScore, action = self.pacmanActions(successorState, curDepth - 1)
+            # ghost calls for next ghost action
+            else:
+                successorScore = self.ghostActions(successorState, curDepth, ghost + 1)
+
+            if minScore > successorScore:
+                minScore = successorScore
+        
+        return minScore
+
+            
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
