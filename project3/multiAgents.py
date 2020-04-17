@@ -170,9 +170,8 @@ class MinimaxAgent(MultiAgentSearchAgent):
     def pacmanActions(self, gameState, curDepth):
         # check if the game state is a terminal state, or if the minimax tree has been reached the limit
         if gameState.isWin() or gameState.isLose() or curDepth == 0:
-            return (self.evaluationFunction(gameState), "Stop")
-        
-        numGhosts = gameState.getNumAgents() - 1
+            return (self.evaluationFunction(gameState), "")
+
         bestScore = -100000000
         bestAction = ""
 
@@ -224,7 +223,64 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         Returns the minimax action using self.depth and self.evaluationFunction
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        score, action = self.maxValue(gameState, float("-inf"), float("inf"), self.depth)
+        return action
+        # util.raiseNotDefined()
+
+    # finds the max node of the tree; same as pacmanAction function from above minimax problem
+    def maxValue(self, gameState, alpha, beta, curDepth):
+        # check if the game state is a terminal state, or if the minimax tree has been reached the limit
+        if gameState.isWin() or gameState.isLose() or curDepth == 0:
+            return (self.evaluationFunction(gameState), "")
+        
+        v = float("-inf")
+        vAction = ""
+
+        # go through all the options that pacman has
+        for action in gameState.getLegalActions(0):
+            # get the successor state of the action
+            successorState= gameState.generateSuccessor(0, action)
+            # get the values of the ghostActions 
+            successorScore = self.minValue(successorState, alpha, beta, curDepth, 1)
+            if v < successorScore:  # take the max score
+                v = successorScore
+                vAction = action
+            
+            if v > beta:
+                return (v, "")
+            alpha = max(alpha, v)
+
+        return (v, vAction)  # return score for use in the ghost function, action for use in the getAction function 
+
+    # this functions determines the ghost(s) actions
+    # Returns: score
+    def minValue(self, gameState, alpha, beta, curDepth, ghost):
+        # check if the game state is a terminal state, or if the minimax tree has been reached the limit
+        if gameState.isWin() or gameState.isLose() or curDepth == 0: 
+            return self.evaluationFunction(gameState)
+
+        v = float("inf")
+
+        for action in gameState.getLegalActions(ghost):
+            successorState = gameState.generateSuccessor(ghost, action)
+
+            # the last ghost action should trigger the pacman action in the tree
+            if ghost == gameState.getNumAgents() - 1:
+                successorScore, action = self.maxValue(successorState, alpha, beta, curDepth - 1)
+            # ghost calls for next ghost action
+            else:
+                successorScore = self.minValue(successorState, alpha, beta, curDepth, ghost + 1)
+
+            if v > successorScore:
+                v = successorScore
+
+            if v < alpha:
+                return v
+            
+            beta = min(beta, v)
+        
+        return v
+
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
     """
