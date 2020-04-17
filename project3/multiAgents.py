@@ -246,8 +246,11 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
                 v = successorScore
                 vAction = action
             
+            # pruning
             if v > beta:
                 return (v, "")
+
+            # update alpha value for pacman's action
             alpha = max(alpha, v)
 
         return (v, vAction)  # return score for use in the ghost function, action for use in the getAction function 
@@ -274,9 +277,11 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
             if v > successorScore:
                 v = successorScore
 
+            # pruning
             if v < alpha:
                 return v
             
+            # update beta value for the minimizer's action
             beta = min(beta, v)
         
         return v
