@@ -352,15 +352,41 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         # take the average score instead of the minScore since this is exepctimax! 
         return totalScore / count
 
+
+
 def betterEvaluationFunction(currentGameState):
     """
     Your extreme ghost-hunting, pellet-nabbing, food-gobbling, unstoppable
     evaluation function (question 5).
 
     DESCRIPTION: <write something here so we know what you did>
+    I began with the gameStates actual Score. I factored in all the important parts of the 
+    game state like the food, capsules, and the ghosties and weighted them accordingly. 
+    The capsules are weighted less negatively then the food because they are worth more than the food. 
+    The ghosties are weighted based on whether or not you can eat them. If you can that affects your 
+    score positively, but if you can't the distance from the ghost affects it negatively. 
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    
+    curPosition = currentGameState.getPacmanPosition()
+    score = currentGameState.getScore()
+    
+    foodList = currentGameState.getFood().asList()
+    for food in foodList: 
+        score = score - manhattanDistance(food, curPosition)
+
+    capsuleList = currentGameState.getCapsules()
+    for capsule in capsuleList:
+        score = score - 0.25 * manhattanDistance(capsule, curPosition)
+    
+    ghostStates = currentGameState.getGhostStates()
+    for state in ghostStates:
+        if state.scaredTimer > 1:
+            score = score + 2.5 * manhattanDistance(state.getPosition(), curPosition)
+        else:
+            score = score - 2.5 * manhattanDistance(state.getPosition(), curPosition)
+
+    return score
 
 # Abbreviation
 better = betterEvaluationFunction
